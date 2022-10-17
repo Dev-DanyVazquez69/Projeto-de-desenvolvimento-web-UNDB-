@@ -15,22 +15,23 @@ import {
 import { useState } from "react";
 
 const ModalComp = ({ data, setData, dataEdit, isOpen, onClose }) => {
-  const [name, setName] = useState(dataEdit.name || "");
-  const [email, setEmail] = useState(dataEdit.email || "");
+  const [Id, setId] = useState(dataEdit.Id || "");
+  const [Nome, setNome] = useState(dataEdit.Nome || "");
+  const [Quantidade, setQuantidade] = useState(dataEdit.Quantidade || "");
 
   const handleSave = () => {
-    if (!name || !email) return;
+    if (!Id || !Nome || !Quantidade) return;
 
     if (emailAlreadyExists()) {
-      return alert("E-mail já cadastrado!");
+      return alert("Id já cadastrado!");
     }
 
     if (Object.keys(dataEdit).length) {
-      data[dataEdit.index] = { name, email };
+      data[dataEdit.index] = { Id, Nome, Quantidade};
     }
 
     const newDataArray = !Object.keys(dataEdit).length
-      ? [...(data ? data : []), { name, email }]
+      ? [...(data ? data : []), { Id, Nome, Quantidade  }]
       : [...(data ? data : [])];
 
     localStorage.setItem("cad_cliente", JSON.stringify(newDataArray));
@@ -41,8 +42,8 @@ const ModalComp = ({ data, setData, dataEdit, isOpen, onClose }) => {
   };
 
   const emailAlreadyExists = () => {
-    if (dataEdit.email !== email && data?.length) {
-      return data.find((item) => item.email === email);
+    if (dataEdit.Id !== Id && data?.length) {
+      return data.find((item) => item.Id === Id);
     }
 
     return false;
@@ -58,19 +59,27 @@ const ModalComp = ({ data, setData, dataEdit, isOpen, onClose }) => {
           <ModalBody>
             <FormControl display="flex" flexDir="column" gap={4}>
               <Box>
-                <FormLabel>Nome</FormLabel>
+                <FormLabel>Id</FormLabel>
                 <Input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  type="Number"
+                  value={Id}
+                  onChange={(e) => setId(e.target.value)}
                 />
               </Box>
               <Box>
-                <FormLabel>E-mail</FormLabel>
+                <FormLabel>Nome</FormLabel>
                 <Input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  type="text"
+                  value={Nome}
+                  onChange={(e) => setNome(e.target.value)}
+                />
+              </Box>
+              <Box>
+                <FormLabel>Quantidade</FormLabel>
+                <Input
+                  type="Number"
+                  value={Quantidade}
+                  onChange={(e) => setQuantidade(e.target.value)}
                 />
               </Box>
             </FormControl>

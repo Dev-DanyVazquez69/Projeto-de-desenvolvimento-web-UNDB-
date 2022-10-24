@@ -16,31 +16,32 @@ import { useEffect, useState } from "react";
 import ModalComp from "./components/ModalComp";
 
 const App = () => {
+  
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [data, setData] = useState([]);
   const [dataEdit, setDataEdit] = useState({});
-
+  //verifica atráves de recursos(hooks) se o dispositivo é mobile
   const isMobile = useBreakpointValue({
     base: true,
     lg: false,
   });
-
+  //carrega os dados do localestorage, caso não haja dados é retornado um array vazio
   useEffect(() => {
     const db_costumer = localStorage.getItem("cad_cliente")
       ? JSON.parse(localStorage.getItem("cad_cliente"))
       : [];
-
+    //salva array
     setData(db_costumer);
   }, [setData]);
-
+  //metodo para remover um item
   const handleRemove = (Id) => {
     const newArray = data.filter((item) => item.Id !== Id);
-
+    //salva array
     setData(newArray);
-
+    //manda para o localstorage
     localStorage.setItem("cad_cliente", JSON.stringify(newArray));
   };
-
+  
   return (
     <Flex
       h="100vh"
@@ -49,22 +50,23 @@ const App = () => {
       fontSize="20px"
       fontFamily="poppins"
     >
-      <Box maxW={800} w="100%" h="100vh" py={10} px={2}>
-        <Button colorScheme="green" onClick={() => [setDataEdit({}), onOpen()]}>
+  
+      <Box maxW={800} w="100%" h="70vh" py={10} px={2}>
+        <Button colorScheme="yellow" onClick={() => [setDataEdit({}), onOpen()]}>
           NOVO CADASTRO
         </Button>
 
         <Box overflowY="auto" height="100%">
-          <Table mt="6">
+          <Table mt="6" bg="#ecc94b" color="black">
             <Thead>
               <Tr>
-                <Th maxW={isMobile ? 5 : 100} fontSize="20px">
+                <Th maxW={isMobile ? 5 : 100} fontSize={isMobile ? 13 : 20} color="black">
                   Id
                 </Th>
-                <Th maxW={isMobile ? 5 : 100} fontSize="20px">
+                <Th maxW={isMobile ? 5 : 100} fontSize={isMobile ? 13 : 20} color="black">
                   Nome
                 </Th>
-                <Th maxW={isMobile ? 5 : 100} fontSize="20px">
+                <Th maxW={isMobile ? 5 : 100} fontSize={isMobile ? 13 : 20} color="black">
                   Quantidade
                 </Th>
                 <Th p={0}></Th>

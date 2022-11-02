@@ -25,7 +25,7 @@ const App = () => {
     base: true,
     lg: false,
   });
-  //carrega os dados do localestorage, caso não haja dados é retornado um array vazio
+  //carrega os dados do localstorage, caso não haja dados é retornado um array vazio
   useEffect(() => {
     const db_costumer = localStorage.getItem("cad_cliente")
       ? JSON.parse(localStorage.getItem("cad_cliente"))
